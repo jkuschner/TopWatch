@@ -15,21 +15,28 @@ def getMenuInput(prompt_message):
       print("Input must be number.")
       continue
 
-print("Welcome to ActivityLogger!!!")
+def printMenuOptions(options, menu_prompt):
+  if not options:
+    print("Error: no menu options\n")
+    return
+  else:
+    print(menu_prompt)
+    for i,option in enumerate(options):
+      if isinstance(option, tuple):
+        print(f"[ {i} ] {option[0]}")
+      else:
+        print(f"[ {i} ] {option}")
+    print()
+
+    
+print(strings.startup_message + "\n")
 
 while True:
-  print(strings.start_menu + "\n")
+#  print(strings.start_menu + "\n")
+  printMenuOptions(strings.start_menu_options, strings.start_menu_prompt)
+
   start_opt = getMenuInput("What's it gonna be bucko? ")
 
-  """
-  while True:
-    try:
-      option = int(input("What's it gonna be bucko? "))
-      break
-    except ValueError:
-      print("Input must be a number.")
-      continue
-  """
   print('\n')
 
   if start_opt == 0: # Start a new activity
@@ -46,9 +53,7 @@ while True:
       print(f'Nice job finishing {curr_acts[0][0]}\n')
       del curr_acts[0]
     else:
-      print("Which activity do you want to end?\n")
-      for i, act in enumerate(curr_acts):
-        print(f"[ {i} ] {act[0]}")
+      printMenuOptions(curr_acts, strings.end_activity_prompt)
         
       ending_option = getMenuInput("Which one?: ")
       
@@ -61,7 +66,10 @@ while True:
       
     
   elif start_opt == 2: # Print the log
-    log.print_log(activities)
+    if activities:
+      log.print_log(activities)
+    else:
+      print("The log is empty.\n")
   else:
     print(start_opt)
     print("Congrats, you're a retard.\n")
