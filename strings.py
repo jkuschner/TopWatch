@@ -9,6 +9,8 @@ start_menu_options = ["Start a new activity", "End your current activity", "Prin
 
 start_menu_prompt = "What would you like to do?"
 
-startup_message = "Welcome to Activity Logger!!!"
+startup_message = "Welcome to TopWatch!!!"
 
 end_activity_prompt = "Which activity do you want to end?"
+
+default_outfile = "log.csv"

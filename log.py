@@ -1,5 +1,6 @@
 import csv
 import get_time
+import strings
 
 labels = ['Activity', 'Start', 'End', 'Time']
 
@@ -24,3 +25,14 @@ def print_log(log):
     for act in log:
       #print('| {0:50s} | {1:8s} | {2:8s} | {3:8s} |'.format(act['Activity'], act['Start'], act['End'], act['Time']))
       print(f'| {act["Activity"]:50.50} | {act["Start"]:8} | {act["End"]:8} | {act["Time"]:8} |')
+
+def log_to_csv(log, filename=strings.default_outfile):
+  try:
+    with open(filename, 'w') as csvfile:
+      writer = csv.DictWriter(csvfile, fieldnames=labels)
+      writer.writeheader()
+      for acts in log:
+        writer.writerow(acts)
+      print(f"Log successfully written to {filename}.\n")
+  except IOError:
+    print("I/O error")

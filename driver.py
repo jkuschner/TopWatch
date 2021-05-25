@@ -70,6 +70,14 @@ while True:
       log.print_log(activities)
     else:
       print("The log is empty.\n")
+  
+  elif start_opt == 3: # Export to csv
+    outfile = input("Filename?: ")
+    if not outfile:
+      outfile = strings.default_outfile
+
+    log.log_to_csv(activities, outfile)
+
   else:
     print(start_opt)
     print("Congrats, you're a retard.\n")
