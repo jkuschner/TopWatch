@@ -104,6 +104,13 @@ while True:
       if confirm == 'n':
         print()
         continue
+    
+    confirm = input("Do you want to save the log data before exiting? [Y/n] ")
+    if confirm != 'n':
+      outfile = input("Filename?: ")
+      if not outfile:
+        outfile = strings.default_file
+      log.log_to_csv(activities, outfile)
 
     print("Thanks for using TopWatch !!!\n")
     break
