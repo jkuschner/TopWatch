@@ -1,4 +1,4 @@
-start_menu_options = ["Start a new activity", "End your current activity", "Print the log", "Export the log to .csv", "Import the log from .csv"]
+start_menu_options = ["Start a new activity", "End an activity", "Print the log", "Export the log to .csv", "Import the log from .csv","Quit TopWatch"]
 
 start_menu_prompt = "What would you like to do?"
 
