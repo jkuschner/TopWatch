@@ -74,9 +74,16 @@ while True:
   elif start_opt == 3: # Export to csv
     outfile = input("Filename?: ")
     if not outfile:
-      outfile = strings.default_outfile
+      outfile = strings.default_file
 
     log.log_to_csv(activities, outfile)
+
+  elif start_opt == 4: # Import from csv
+    infile = input("Filename?: ")
+    if not infile:
+      infile = strings.default_file
+
+    log.csv_to_log(activities, infile)
 
   else:
     print(start_opt)
