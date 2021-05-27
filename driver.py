@@ -6,7 +6,7 @@ import csv
 activities = [] # A list of dictionaries that represent each individual activity
 curr_acts = []  # A list of pairs that contain activity names(1) and their start time(2) as strings that represent unfinished activities
 
-def getMenuInput(prompt_message):
+def getNumInput(prompt_message):
   while True:
     try:
       option = int(input(prompt_message))
@@ -44,17 +44,17 @@ print(strings.startup_message + "\n")
 while True:
   printMenuOptions(strings.start_menu_options, strings.start_menu_prompt)
 
-  start_opt = getMenuInput("Choose a menu option: ")
+  start_opt = input("Choose a menu option: ")
 
   print()
 
-  if start_opt == 0: # Start a new activity
+  if start_opt == '0': # Start a new activity
     name = input("What are you going to do?(<50 chars): ")
     curr_acts.append((name, get_time.get_time()))
     print('Good Luck!\n')
 
 
-  elif start_opt == 1: # End an activity
+  elif start_opt == '1': # End an activity
     if len(curr_acts) < 1:
       print("You can't end an activity without starting one first.\n")
     elif len(curr_acts) == 1:
@@ -64,7 +64,7 @@ while True:
     else:
       printMenuOptions(curr_acts, strings.end_activity_prompt)
         
-      ending_option = getMenuInput("Which one?: ")
+      ending_option = getNumInput("Which one?: ")
       
       ending_name = curr_acts[ending_option][0]
       ending_start = curr_acts[ending_option][1]
@@ -75,14 +75,14 @@ while True:
 
       
     
-  elif start_opt == 2: # Print the log
+  elif start_opt == '2': # Print the log
     if activities:
       log.print_log(activities)
       print()
     else:
       print("The log is empty.\n")
   
-  elif start_opt == 3: # Export to csv
+  elif start_opt == '3': # Export to csv
     outfile = input("Filename?: ")
     if not outfile:
       outfile = strings.default_file
@@ -95,14 +95,23 @@ while True:
     else:
       print()
 
-  elif start_opt == 4: # Import from csv
+  elif start_opt == '4': # Import from csv
     infile = input("Filename?: ")
     if not infile:
       infile = strings.default_file
 
     log.csv_to_log(activities, infile)
+
+  elif start_opt == '5': # Clear the log
+    print(f"The log has {len(activities)} items.")
+    confirm = input("Are you sure you want to clear? [Y/n] ")
+    if confirm != 'n':
+      activities = []
+      print("Log successfully cleared\n")
+    else:
+      print()
   
-  elif start_opt == 5: # Program Exit
+  elif start_opt == '6': # Program Exit
     if len(curr_acts) > 0:
       print(f"Warning: You have {len(curr_acts)} unfinished activities which will be lost upon exiting.")
       confirm = input("Are you sure you want to quit? [Y/n] ")
