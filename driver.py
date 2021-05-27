@@ -5,6 +5,7 @@ import csv
 
 activities = [] # A list of dictionaries that represent each individual activity
 curr_acts = []  # A list of pairs that contain activity names(1) and their start time(2) as strings that represent unfinished activities
+default_file = strings.default_file
 
 def getNumInput(prompt_message):
   while True:
@@ -31,7 +32,7 @@ def printMenuOptions(options, menu_prompt):
 # Load a log from log.csv if available by default
 try:
   print("Loading existing log data...")
-  with open(strings.default_file,'r') as data:
+  with open(default_file,'r') as data:
     for line in csv.DictReader(data):
       log.add_activity(activities,line)
     print("Successfully loaded log data\n")
@@ -42,7 +43,7 @@ except IOError:
 print(strings.startup_message + "\n")
 
 while True:
-  printMenuOptions(strings.start_menu_options, strings.start_menu_prompt)
+  printMenuOptions(strings.start_menu_options, strings.menu_prompt)
 
   start_opt = input("Choose a menu option: ")
 
@@ -85,7 +86,7 @@ while True:
   elif start_opt == '3': # Export to csv
     outfile = input("Filename?: ")
     if not outfile:
-      outfile = strings.default_file
+      outfile = default_file
 
     log.log_to_csv(activities, outfile)
     confirm = input("Do you want to clear the current log? [Y/n] ")
@@ -98,7 +99,7 @@ while True:
   elif start_opt == '4': # Import from csv
     infile = input("Filename?: ")
     if not infile:
-      infile = strings.default_file
+      infile = default_file
 
     log.csv_to_log(activities, infile)
 
@@ -110,8 +111,24 @@ while True:
       print("Log successfully cleared\n")
     else:
       print()
+
+  elif start_opt == '6': # Open Settings
+    while True:
+      printMenuOptions(strings.settings_menu_options, strings.menu_prompt)
+      settings_opt = input("Choose a menu option: ")
+
+      if settings_opt == '0':
+        # Change time format
+        print("Changed time format")
+      
+      elif settings_opt == '1':
+        # Change default file location
+        print("Changed default file loc")
+
+      elif settings_opt == '2': # go back to main menu
+        break
   
-  elif start_opt == '6': # Program Exit
+  elif start_opt == '7': # Program Exit
     if len(curr_acts) > 0:
       print(f"Warning: You have {len(curr_acts)} unfinished activities which will be lost upon exiting.")
       confirm = input("Are you sure you want to quit? [Y/n] ")
@@ -124,7 +141,7 @@ while True:
       if confirm != 'n':
         outfile = input("Filename?: ")
         if not outfile:
-          outfile = strings.default_file
+          outfile = default_file
         log.log_to_csv(activities, outfile)
 
     print("Thanks for using TopWatch !!!\n")
