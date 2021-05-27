@@ -49,13 +49,13 @@ while True:
 
   print()
 
-  if start_opt == '0': # Start a new activity
+  if start_opt == '0' or start_opt == 'start': # Start a new activity
     name = input("What are you going to do?(<50 chars): ")
     curr_acts.append((name, get_time.get_time()))
     print('Good Luck!\n')
 
 
-  elif start_opt == '1': # End an activity
+  elif start_opt == '1' or start_opt == 'end': # End an activity
     if len(curr_acts) < 1:
       print("You can't end an activity without starting one first.\n")
     elif len(curr_acts) == 1:
@@ -76,14 +76,14 @@ while True:
 
       
     
-  elif start_opt == '2': # Print the log
+  elif start_opt == '2' or start_opt == 'print': # Print the log
     if activities:
       log.print_log(activities)
       print()
     else:
       print("The log is empty.\n")
   
-  elif start_opt == '3': # Export to csv
+  elif start_opt == '3' or start_opt == 'export': # Export to csv
     outfile = input("Filename?: ")
     if not outfile:
       outfile = default_file
@@ -96,14 +96,14 @@ while True:
     else:
       print()
 
-  elif start_opt == '4': # Import from csv
+  elif start_opt == '4' or start_opt == 'import': # Import from csv
     infile = input("Filename?: ")
     if not infile:
       infile = default_file
 
     log.csv_to_log(activities, infile)
 
-  elif start_opt == '5': # Clear the log
+  elif start_opt == '5' or start_opt == 'clear': # Clear the log
     print(f"The log has {len(activities)} items.")
     confirm = input("Are you sure you want to clear? [Y/n] ")
     if confirm != 'n':
@@ -112,7 +112,7 @@ while True:
     else:
       print()
 
-  elif start_opt == '6': # Open Settings
+  elif start_opt == '6' or start_opt == 'settings': # Open Settings
     while True:
       printMenuOptions(strings.settings_menu_options, strings.menu_prompt)
       settings_opt = input("Choose a menu option: ")
@@ -139,7 +139,7 @@ while True:
       elif settings_opt == '2': # go back to main menu
         break
   
-  elif start_opt == '7': # Program Exit
+  elif start_opt == '7' or start_opt == 'exit' or start_opt == 'quit': # Program Exit
     if len(curr_acts) > 0:
       print(f"Warning: You have {len(curr_acts)} unfinished activities which will be lost upon exiting.")
       confirm = input("Are you sure you want to quit? [Y/n] ")
