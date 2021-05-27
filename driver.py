@@ -4,8 +4,7 @@ import strings
 import csv
 
 activities = [] # A list of dictionaries that represent each individual activity
-curr_acts = []  # A list of pairs that contain activity names(1) and their start time(2) as strings
-                #   that represent unfinished activities
+curr_acts = []  # A list of pairs that contain activity names(1) and their start time(2) as strings that represent unfinished activities
 
 def getMenuInput(prompt_message):
   while True:
@@ -28,10 +27,11 @@ def printMenuOptions(options, menu_prompt):
       else:
         print(f"[ {i} ] {option}")
     print()
+
 # Load a log from log.csv if available by default
 try:
   print("Loading existing log data...")
-  with open('log.csv', 'r') as data:
+  with open(strings.default_file,'r') as data:
     for line in csv.DictReader(data):
       log.add_activity(activities,line)
     print("Successfully loaded log data\n")
@@ -42,7 +42,6 @@ except IOError:
 print(strings.startup_message + "\n")
 
 while True:
-#  print(strings.start_menu + "\n")
   printMenuOptions(strings.start_menu_options, strings.start_menu_prompt)
 
   start_opt = getMenuInput("Choose a menu option: ")
@@ -89,6 +88,12 @@ while True:
       outfile = strings.default_file
 
     log.log_to_csv(activities, outfile)
+    confirm = input("Do you want to clear the current log? [Y/n] ")
+    if confirm != 'n':
+      activities = []
+      print("The log has been cleared\n")
+    else:
+      print()
 
   elif start_opt == 4: # Import from csv
     infile = input("Filename?: ")
@@ -105,12 +110,13 @@ while True:
         print()
         continue
     
-    confirm = input("Do you want to save the log data before exiting? [Y/n] ")
-    if confirm != 'n':
-      outfile = input("Filename?: ")
-      if not outfile:
-        outfile = strings.default_file
-      log.log_to_csv(activities, outfile)
+    if activities:
+      confirm = input("Do you want to save the log data before exiting? [Y/n] ")
+      if confirm != 'n':
+        outfile = input("Filename?: ")
+        if not outfile:
+          outfile = strings.default_file
+        log.log_to_csv(activities, outfile)
 
     print("Thanks for using TopWatch !!!\n")
     break

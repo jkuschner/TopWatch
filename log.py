@@ -37,8 +37,8 @@ def csv_to_log(log, filename=strings.default_file):
   try:
     with open(filename, 'r') as data:
       for line in csv.DictReader(data):
-#        print(type(line))
         add_activity(log, line)
+      print(f"Log successfully loaded from {filename}.\n")
   except IOError:
     print("I/O error")
 

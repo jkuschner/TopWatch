@@ -9,6 +9,15 @@ def get_date_time():
   now = datetime.now(tz)
   dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
   #print("date and time =", dt_string)
+  return dt_string
+
+def get_date(extension="", directory=""):
+  tz = pytz.timezone('US/Pacific')
+  ## YYYY-MM-DD
+  now = datetime.now(tz)
+  d_string = now.strftime("%Y-%m-%d")
+  #print("date = ", d_string + extension)
+  return directory + d_string + extension
 
 def get_time():
   tz = pytz.timezone('US/Pacific')
