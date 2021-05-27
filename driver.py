@@ -123,7 +123,18 @@ while True:
       
       elif settings_opt == '1':
         # Change default file location
-        print("Changed default file loc")
+        if default_file == strings.default_file:
+          default_file = input("New default file location: ")
+          print(f"Changed default file locaction to {default_file}\n")
+        else:
+          print(f"Default file location is currently {default_file}\n")
+          confirm = input("Do you want to reset(Y) or change again(n)? [Y/n] ")
+          if confirm == 'n':
+            default_file = input("New default file location: ")
+            print(f"Changed default file location to {default_file}\n")
+          else:
+            default_file = strings.default_file
+            print(f"Reset default file location to {default_file}\n")
 
       elif settings_opt == '2': # go back to main menu
         break
