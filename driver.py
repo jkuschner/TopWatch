@@ -122,5 +122,4 @@ while True:
     break
 
   else:
-    print(start_opt)
-    print("Congrats, you're a retard.\n")
+    print(f"{start_opt} is not a valid option.")
