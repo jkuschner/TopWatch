@@ -77,40 +77,16 @@ while True:
       
     
   elif start_opt == '2' or start_opt == 'print': # Print the log
-    if activities:
-      log.print_log(activities)
-      print()
-    else:
-      print("The log is empty.\n")
+    log.print_log(activities)
   
   elif start_opt == '3' or start_opt == 'export': # Export to csv
-    outfile = input("Filename?: ")
-    if not outfile:
-      outfile = default_file
-
-    log.log_to_csv(activities, outfile)
-    confirm = input("Do you want to clear the current log? [Y/n] ")
-    if confirm != 'n':
-      activities = []
-      print("The log has been cleared\n")
-    else:
-      print()
+    log.export_log(activities)
 
   elif start_opt == '4' or start_opt == 'import': # Import from csv
-    infile = input("Filename?: ")
-    if not infile:
-      infile = default_file
-
-    log.csv_to_log(activities, infile)
+    log.import_log(activities)
 
   elif start_opt == '5' or start_opt == 'clear': # Clear the log
-    print(f"The log has {len(activities)} items.")
-    confirm = input("Are you sure you want to clear? [Y/n] ")
-    if confirm != 'n':
-      activities = []
-      print("Log successfully cleared\n")
-    else:
-      print()
+    log.clear(activities)
 
   elif start_opt == '6' or start_opt == 'settings': # Open Settings
     while True:
@@ -150,10 +126,7 @@ while True:
     if activities:
       confirm = input("Do you want to save the log data before exiting? [Y/n] ")
       if confirm != 'n':
-        outfile = input("Filename?: ")
-        if not outfile:
-          outfile = default_file
-        log.log_to_csv(activities, outfile)
+        log.export_log(activities)
 
     print("Thanks for using TopWatch !!!\n")
     break
