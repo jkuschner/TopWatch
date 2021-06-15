@@ -26,7 +26,7 @@ def print_log(log):
   else:
     print("The log is empty.\n")
 
-def log_to_csv(log, filename=strings.default_file):
+def log_to_csv(log, filename):
   try:
     with open(filename, 'w') as csvfile:
       writer = csv.DictWriter(csvfile, fieldnames=labels)
@@ -37,14 +37,14 @@ def log_to_csv(log, filename=strings.default_file):
   except IOError:
     print("I/O error")
 
-def export_log(log, prompt="Filename?: "):
+def export_log(log, default_file, prompt="Filename?: "):
   outfile = input(prompt)
   if not outfile:
-    outfile = strings.default_file
+    outfile = default_file
   
   log_to_csv(log, outfile)
   
-def csv_to_log(log, filename=strings.default_file):
+def csv_to_log(log, filename):
   try:
     with open(filename, 'r') as data:
       for line in csv.DictReader(data):
@@ -53,10 +53,10 @@ def csv_to_log(log, filename=strings.default_file):
   except IOError:
     print("I/O error")
 
-def import_log(log, prompt="Filename?: "):
+def import_log(log, default_file, prompt="Filename?: "):
   infile = input(prompt)
   if not infile:
-    infile = strings.default_file
+    infile = default_file
   csv_to_log(log, infile)
 
 def clear(log):

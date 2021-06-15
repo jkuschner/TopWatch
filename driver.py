@@ -5,7 +5,9 @@ import csv
 
 activities = [] # A list of dictionaries that represent each individual activity
 curr_acts = []  # A list of pairs that contain activity names(1) and their start time(2) as strings that represent unfinished activities
-default_file = strings.default_file
+
+timezone = strings.timezones['Pacific']
+default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
 
 def getNumInput(prompt_message):
   while True:
@@ -51,7 +53,7 @@ while True:
 
   if start_opt == '0' or start_opt == 'start': # Start a new activity
     name = input("What are you going to do?(<50 chars): ")
-    curr_acts.append((name, get_time.get_time()))
+    curr_acts.append((name, get_time.get_time(timezone)))
     print('Good Luck!\n')
 
 
@@ -59,7 +61,7 @@ while True:
     if len(curr_acts) < 1:
       print("You can't end an activity without starting one first.\n")
     elif len(curr_acts) == 1:
-      activities = log.add_activity(activities, log.make_activity(curr_acts[0][0],curr_acts[0][1],get_time.get_time()))
+      activities = log.add_activity(activities, log.make_activity(curr_acts[0][0],curr_acts[0][1],get_time.get_time(timezone)))
       print(f'Nice job finishing {curr_acts[0][0]}\n')
       del curr_acts[0]
     else:
@@ -70,7 +72,7 @@ while True:
       ending_name = curr_acts[ending_option][0]
       ending_start = curr_acts[ending_option][1]
 
-      activities = log.add_activity(activities, log.make_activity(ending_name, ending_start, get_time.get_time()))
+      activities = log.add_activity(activities, log.make_activity(ending_name, ending_start, get_time.get_time(timezone)))
       print(f'Nice job finishing {curr_acts[ending_option][0]}\n')
       del curr_acts[ending_option]
 
@@ -80,10 +82,10 @@ while True:
     log.print_log(activities)
   
   elif start_opt == '3' or start_opt == 'export': # Export to csv
-    log.export_log(activities)
+    log.export_log(activities, default_file)
 
   elif start_opt == '4' or start_opt == 'import': # Import from csv
-    log.import_log(activities)
+    log.import_log(activities, default_file)
 
   elif start_opt == '5' or start_opt == 'clear': # Clear the log
     log.clear(activities)
@@ -95,11 +97,46 @@ while True:
 
       if settings_opt == '0':
         # Change time format
-        print("Changed time format")
+        print("Changed time format(not really)")
+
+      elif settings_opt == '1': # Change timezone
+        print(f"The current timezone is {timezone}.\n")
+        while True:
+          printMenuOptions(strings.timezone_options, "Which timezone do you want?")
+          timezone_opt = input("Choose a menu option: ")
+
+          if timezone_opt == '0' or timezone_opt == 'Pacific':
+            timezone = strings.timezones['Pacific']
+            default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
+            break
+          elif timezone_opt == '1' or timezone_opt == 'Mountain':
+            timezone = strings.timezones['Mountain']
+            default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
+            break
+          elif timezone_opt == '2' or timezone_opt == 'Central':
+            timezone = strings.timezones['Central']
+            default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
+            break
+          elif timezone_opt == '3' or timezone_opt == 'Eastern':
+            timezone = strings.timezones['Eastern']
+            default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
+            break
+          elif timezone_opt == '4' or timezone_opt == 'Hawaii':
+            timezone = strings.timezones['Hawaii']
+            default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
+            break
+          elif timezone_opt == '5' or timezone_opt == 'UTC':
+            timezone = strings.timezones['UTC']
+            default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
+            break
+          else:
+            print("Not a valid option\n")
+            continue
+
       
-      elif settings_opt == '1':
+      elif settings_opt == '2':
         # Change default file location
-        if default_file == strings.default_file:
+        if default_file == get_time.get_date(timezone,extension=".csv",directory="logs/"):
           default_file = input("New default file location: ")
           print(f"Changed default file locaction to {default_file}\n")
         else:
@@ -109,10 +146,10 @@ while True:
             default_file = input("New default file location: ")
             print(f"Changed default file location to {default_file}\n")
           else:
-            default_file = strings.default_file
+            default_file = get_time.get_date(timezone,extension=".csv",directory="logs/")
             print(f"Reset default file location to {default_file}\n")
 
-      elif settings_opt == '2': # go back to main menu
+      elif settings_opt == '3': # go back to main menu
         break
   
   elif start_opt == '7' or start_opt == 'exit' or start_opt == 'quit': # Program Exit
