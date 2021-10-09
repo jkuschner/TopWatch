@@ -9,6 +9,3 @@ To run TopWatch, clone the repository onto your local machine and from the root 
 ```
 python3 driver.py
 ```
-
-
-testing push
